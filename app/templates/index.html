@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% block content %}
+<html>
+  <head>
+    {% if ModuleTitle %}
+    <title>{{ ModuleTitle }}</title>
+    {% else %}
+    <title>No ModuleTitle</title>
+    {% endif %}
+  </head>
+  <body>
+    <div class="head">
+        <h1>{{ModuleTitle}}</h1>
+        </div>
+      <div class = "cardgrid">
+      {% for Assign in AllAssessments %}
+      
+        <div class="card text-bg-dark mb-3" style="max-width: 35rem;">
+        <div class="card-header">{{ Assign.ModuleTitle }}</div>
+        <div class=p-auto mb=auto>
+        <div class="card-body text-secondary">
+          <h5 class="card-Title"><strong> Module Code: </strong> {{ Assign.ModuleCode }}</h5>
+          <p class="card-Deadline"><strong> Deadline: </strong>{{ Assign.ModuleDeadline }}</p>
+          <p class="card-Description"><strong> Description: </strong>{{ Assign.ModuleDescription }}</p>
+          <!-- Putting the status of the Assignment whether it is completed or not -->
+          {% if Assign.ModuleCompleted %} 
+          <p class="card-Description"><strong>Status: </strong> Completed</p>
+          {% else %}
+          <p class="card-Description"><strong>Status: </strong> Incomplete</p>
+          {% endif %}
+          <form action="{{ url_for('Delete', ModuleID=Assign.ModuleID) }}" name="Creating" method="POST">
+            <input type="submit" class="btn btn-outline-light btn-dark" value="Delete">
+          </form>
+        </div>
+        </div>
+      </div>
+      </form>
+      {% endfor %}
+    </div>
+    </body>
+</html>
+{% endblock %} 

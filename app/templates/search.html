@@ -1,0 +1,44 @@
+{% extends "base.html" %}{% block content %}
+<html>
+  <head>
+    <title>Searched Assessment</title>
+  </head>
+  <body>
+  <div class="head">
+    <h1>Searched Assessment</h1>
+  </div>
+
+  <div class="cardgrid">
+    
+    {% for result in searchedAssessment %}
+    <div class="card text-bg-dark mb-3" style="max-width: 35rem;">
+      <div class="card-header">{{ result.ModuleTitle }}</div>
+      <div class="card-body text-secondary">
+          <p class="card-title"><strong> Module Code: </strong> {{ result.ModuleCode }}</p>
+          <p class="card-Deadline"><strong> Deadline: </strong> {{ result.ModuleDeadline }}</p>
+          <p class="card-Description"><strong> Description: </strong> {{ result.ModuleDescription }}</p>
+          {% if result.ModuleCompleted %} 
+          <p class="card-Description"><strong>Status: </strong> Completed</p>
+          <form action="{{ url_for('Delete', ModuleID=result.ModuleID) }}" name="Creating" method="POST">
+            <input type="submit" class="btn btn-light" value="Delete">
+          </form>
+          {% else %}
+          <p class="card-Description"><strong>Status: </strong> Incomplete</p>
+          <form action="/{{result.ModuleID}}" name="Creating" method="POST">
+            <input type="submit" class="btn btn-outline-light btn-dark" value="Mark Complete"> 
+          </form>
+            -----------
+            <form action="{{ url_for('Delete', ModuleID=result.ModuleID) }}" name="Creating" method="POST">
+              <input type="submit" class="btn btn-light" value="Delete">
+            </form>
+            
+            {% endif %}
+      </div>
+
+  </div>
+  
+  {% endfor %}
+  </div>
+  </body> 
+  </html>
+  {% endblock %}

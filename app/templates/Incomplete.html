@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% block content %}
+<html>
+  <head>
+    {% if ModuleTitle %}
+    <title>{{ ModuleTitle }}</title>
+    {% else %}
+    <title>No ModuleTitle</title>
+    {% endif %}
+  </head>
+  <body>
+    <div class="head">
+      <h1>{{ModuleTitle}}</h1>
+      </div>
+    <div class="cardgrid">
+      {% for Incomplete in IncompleteAssessments %}
+      
+      <div class="card text-bg-dark mb-3" style="max-width: 35rem;">
+        <div class="card-header">{{ Incomplete.ModuleTitle }}</div>
+        <div class="card-body text-secondary">
+          <p class="card-Title"><strong> Module Code: </strong> {{ Incomplete.ModuleCode }}</p>
+          <p class="card-Deadline"><strong> Deadline: </strong> {{ Incomplete.ModuleDeadline }}</p>
+          <p class="card-Description"><strong> Description: </strong>{{ Incomplete.ModuleDescription }}</p>
+          
+          
+            <form action="/{{Incomplete.ModuleID}}" name="Creating" method="POST">                <!-- for Mark as Complete button button -->
+              <input type="submit" class="btn btn-light" value="Mark Complete">            <!-- Creating a "Mark Completed" button which sends the assessment to the completed url -->
+            </form>  
+            -----------
+            <form action="{{ url_for('Delete', ModuleID=Incomplete.ModuleID) }}" name="Creating" method="POST">                <!-- for Delete button -->
+              <input type="submit" class="btn btn-outline-light btn-dark" value="Delete">
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </body> 
+  </html>
+  {% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<html>
+  <head>
+    {% if ModuleTitle %}
+    <title>{{ ModuleTitle }}</title>
+    {% endif %}
+  </head>
+  <body>
+    <div class="head">
+    <center class="heading"><h1>{{ModuleTitle}}</h1></center>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }} </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form action="" name="Create Assessments" method="POST">
+      {{ form.csrf_token }}                         <!-- creating a CSRF token hidden field -->
+      {{ form.hidden_tag() }}                       <!-- for multiple hidden fields -->
+      <div class="form-group">
+        <label for="inputTitle">Title</label>
+        {{form.Title( class="form-control", placeholder="Enter Title")}}
+      </div>
+      <div class="form-group">
+        <label for="inputModule">Module Code</label>
+        {{form.Module( class="form-control", placeholder="Enter Module")}}
+      </div>
+      <div class="form-group">
+        <label for="inputDate">Deadline</label>
+        {{form.Deadline( class="form-control", type = "date",  placeholder="dd/mm/yyyy" )}}  <!-- the format for deadline is in dd/mm/yyy form -->
+      </div>
+      <div class="form-group">
+        <label for="inputDescription">Description</label>
+        {{form.Description( class="form-control", placeholder="Enter Description" )}}
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary btn-dark" value = "Add"></input>     <!-- Creating a button to add the new assignment -->
+    </form>    
+  </body>
+  </html>
+  {% endblock %}
